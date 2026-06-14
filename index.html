@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#050505" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Para Venilda ❤" />
+  <title>Para Venilda — Kerollaynne ❤</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Montserrat:wght@100;200;300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ── CANVAS GLOBAIS (estrelas + partículas) ── -->
+  <canvas id="cv-stars"></canvas>
+  <canvas id="cv-particles"></canvas>
+
+  <!-- ── ÁUDIOS ── -->
+  <audio id="bg-music" src="musica.mp3" loop preload="auto"></audio>
+  <audio id="voice-audio" src="audio.ogg" preload="auto"></audio>
+
+  <!-- ══════════════════════════════════════════
+       SPLASH
+  ══════════════════════════════════════════ -->
+  <div id="splash">
+    <div class="sp-ring r1"></div>
+    <div class="sp-ring r2"></div>
+    <div class="sp-ring r3"></div>
+    <div class="sp-heart">
+      <svg viewBox="0 0 100 90" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="hg" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%"   stop-color="#F0D060"/>
+            <stop offset="50%"  stop-color="#D4AF37"/>
+            <stop offset="100%" stop-color="#A07D20"/>
+          </linearGradient>
+          <filter id="hf">
+            <feGaussianBlur stdDeviation="3.5" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <path d="M50 80C50 80 8 52 8 28C8 14 18 5 30 5C38 5 45 10 50 17C55 10 62 5 70 5C82 5 92 14 92 28C92 52 50 80 50 80Z"
+              fill="url(#hg)" filter="url(#hf)"/>
+      </svg>
+    </div>
+    <p class="sp-label">Para Venilda</p>
+    <div class="sp-bar"><div class="sp-bar-fill"></div></div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       TELA 1 · CAPA
+  ══════════════════════════════════════════ -->
+  <section id="tela-capa" class="tela">
+    <div class="capa-bg">
+      <img src="beijo.jpeg" alt="" class="capa-foto" />
+      <div class="capa-vignette"></div>
+      <div class="capa-grad"></div>
+    </div>
+    <div class="capa-content">
+      <div class="orn"><span class="ol"></span><span class="og">◆</span><span class="ol"></span></div>
+      <p class="capa-eyebrow">Uma surpresa especial</p>
+      <h1 class="capa-titulo">Para Venilda</h1>
+      <p class="capa-sub">Existe algo que meu coração<br>quer te dizer…</p>
+
+      <!-- Contador de tempo real na capa -->
+      <div class="capa-cnt" id="capa-cnt">
+        <span class="cnt-item"><span id="c-anos">0</span><small>a</small></span>
+        <span class="cnt-sep">·</span>
+        <span class="cnt-item"><span id="c-meses">0</span><small>m</small></span>
+        <span class="cnt-sep">·</span>
+        <span class="cnt-item"><span id="c-dias">0</span><small>d</small></span>
+        <span class="cnt-sep">·</span>
+        <span class="cnt-item"><span id="c-horas">00</span><small>h</small></span>
+        <span class="cnt-sep">·</span>
+        <span class="cnt-item"><span id="c-min">00</span><small>min</small></span>
+        <span class="cnt-label">juntas</span>
+      </div>
+
+      <button class="btn-luxo" onclick="iniciarJornada()">
+        <span class="bl-shine"></span>
+        <span class="bl-txt">Abrir Minha Surpresa &nbsp;❤</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       TELA 2 · GALERIA
+  ══════════════════════════════════════════ -->
+  <section id="tela-galeria" class="tela">
+    <!-- fundo desfocado dinâmico -->
+    <div class="gal-bg" id="gal-bg"></div>
+    <div class="gal-scrim"></div>
+
+    <div class="gal-wrap">
+      <div class="orn"><span class="ol"></span><span class="og">◆</span><span class="ol"></span></div>
+      <p class="sec-eyebrow">Nossa galeria</p>
+
+      <!-- Card glassmorphism -->
+      <div class="gal-card glass">
+        <div class="gal-img-box">
+          <img id="gal-img" src="foto1.jpg" alt="" class="gal-foto" />
+          <div class="gal-shine"></div>
+        </div>
+        <div class="gal-info">
+          <span class="gal-contador" id="gal-contador">01 / 10</span>
+          <p class="gal-texto" id="gal-texto">18 de Agosto de 2023</p>
+        </div>
+      </div>
+
+      <!-- Dots -->
+      <div class="gal-dots" id="gal-dots"></div>
+
+      <!-- Setas -->
+      <div class="gal-nav">
+        <button class="gal-btn" id="gal-prev" aria-label="anterior">&#8249;</button>
+        <button class="gal-btn" id="gal-next" aria-label="próxima">&#8250;</button>
+      </div>
+    </div>
+
+    <button class="btn-luxo btn-bottom" onclick="irParaTela('tela-timeline')">
+      <span class="bl-shine"></span>
+      <span class="bl-txt">Continuar &nbsp;→</span>
+    </button>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       TELA 3 · LINHA DO TEMPO
+  ══════════════════════════════════════════ -->
+  <section id="tela-timeline" class="tela">
+    <div class="scroll-wrap">
+      <div class="sec-badge">Nossa História</div>
+      <h2 class="sec-h2">Cada momento<br><em>que nos trouxe até aqui</em></h2>
+
+      <div class="timeline">
+        <div class="tl-item" data-delay="0">
+          <div class="tl-dot">❤</div>
+          <div class="tl-body">
+            <div class="tl-date">18 · 08 · 2023</div>
+            <div class="tl-title">Primeiro Encontro</div>
+            <div class="tl-desc">O dia em que nossos mundos se tornaram um só.</div>
+          </div>
+        </div>
+        <div class="tl-item" data-delay="160">
+          <div class="tl-dot">📸</div>
+          <div class="tl-body">
+            <div class="tl-date">Nossas memórias</div>
+            <div class="tl-title">Primeira Foto</div>
+            <div class="tl-desc">Cada clique, uma lembrança guardada para sempre.</div>
+          </div>
+        </div>
+        <div class="tl-item" data-delay="320">
+          <div class="tl-dot">✨</div>
+          <div class="tl-body">
+            <div class="tl-date">Cada dia juntas</div>
+            <div class="tl-title">Nossos Sonhos</div>
+            <div class="tl-desc">Construindo um futuro cheio de amor e cumplicidade.</div>
+          </div>
+        </div>
+        <div class="tl-item tl-gold" data-delay="480">
+          <div class="tl-dot tl-dot-gold">💍</div>
+          <div class="tl-body">
+            <div class="tl-date">14 · 06 · 2026</div>
+            <div class="tl-title">Nosso Para Sempre</div>
+            <div class="tl-desc">O início do capítulo mais bonito da nossa história.</div>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-luxo" onclick="irParaTela('tela-carta')">
+        <span class="bl-shine"></span>
+        <span class="bl-txt">Continuar &nbsp;→</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       TELA 4 · CARTA
+  ══════════════════════════════════════════ -->
+  <section id="tela-carta" class="tela">
+    <div class="scroll-wrap">
+      <div class="sec-badge">Carta Para Você</div>
+      <h2 class="sec-h2">Do meu coração<br><em>para o seu</em></h2>
+
+      <div class="carta glass">
+        <div class="carta-selo">❤</div>
+        <p class="carta-txt" id="carta-txt"></p>
+        <span class="carta-cursor" id="carta-cursor">|</span>
+      </div>
+
+      <button class="btn-luxo hidden" id="btn-carta-next" onclick="irParaTela('tela-audio')">
+        <span class="bl-shine"></span>
+        <span class="bl-txt">Continuar &nbsp;❤</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       TELA 5 · ÁUDIO
+  ══════════════════════════════════════════ -->
+  <section id="tela-audio" class="tela">
+    <div class="scroll-wrap">
+      <div class="sec-badge">Mensagem de Voz</div>
+      <h2 class="sec-h2">Gravei algo<br><em>só para você</em></h2>
+
+      <div class="audio-card glass">
+        <div class="audio-heart" id="audio-heart">❤</div>
+        <button class="btn-audio" id="btn-audio" onclick="toggleVoz()">
+          ❤️ &nbsp;Ouça Meu Coração
+        </button>
+        <div class="audio-vis" id="audio-vis">
+          <div class="wave-bars" id="wave-bars"></div>
+        </div>
+        <div class="mvi" id="mvi">
+          <span class="mvi-label" id="mvi-label">🎵 música normal</span>
+          <div class="mvi-track"><div class="mvi-fill" id="mvi-fill"></div></div>
+        </div>
+      </div>
+
+      <button class="btn-luxo" onclick="irParaTela('tela-cinema')">
+        <span class="bl-shine"></span>
+        <span class="bl-txt">Continuar &nbsp;→</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       TELA 6 · SEQUÊNCIA CINEMATOGRÁFICA
+  ══════════════════════════════════════════ -->
+  <section id="tela-cinema" class="tela">
+    <!-- Batimento cardíaco discreto no topo -->
+    <div class="cin-hb">
+      <div class="cin-ring cr1"></div>
+      <div class="cin-ring cr2"></div>
+      <div class="cin-heart-ico">
+        <svg viewBox="0 0 100 90" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="cg" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#cc0000"/>
+              <stop offset="100%" stop-color="#4a0000"/>
+            </linearGradient>
+          </defs>
+          <path d="M50 80C50 80 8 52 8 28C8 14 18 5 30 5C38 5 45 10 50 17C55 10 62 5 70 5C82 5 92 14 92 28C92 52 50 80 50 80Z" fill="url(#cg)"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Palco dos textos -->
+    <div class="cin-stage" id="cin-stage">
+      <p class="cin-line cin-lg"   data-blk="1">VENILDA…</p>
+      <p class="cin-line cin-md"   data-blk="2">Desde 18/08/2023, cada momento ao seu lado<br>mudou a minha vida.</p>
+      <p class="cin-line cin-md"   data-blk="3">Você se tornou meu lugar seguro.</p>
+      <p class="cin-line cin-md"   data-blk="4">Meu sorriso favorito.</p>
+      <p class="cin-line cin-md"   data-blk="5">Minha melhor escolha.</p>
+      <p class="cin-line cin-gold" data-blk="6">Meu amor.</p>
+      <p class="cin-line cin-sm"   data-blk="7">Existe algo que eu preciso te mostrar.</p>
+      <p class="cin-line cin-sm"   data-blk="8">Algo que não cabe dentro de uma tela.</p>
+      <p class="cin-line cin-sm"   data-blk="9">Algo que precisa ser vivido.</p>
+      <p class="cin-line cin-md"   data-blk="10">Olhe ao seu redor…</p>
+      <p class="cin-line cin-md"   data-blk="11">Eu estou bem perto de você.</p>
+      <p class="cin-line cin-vire" data-blk="12">VIRE-SE ❤️</p>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
